@@ -20,7 +20,7 @@
 // DEALINGS IN THE SOFTWARE.
 //*****************************************************************************
 //
-// AMS CCS811 Ultra-low power Digital VOC Sensor Arduino Library
+// Arduino Library for AMS CCS811 Ultra-low power Digital VOC Sensor
 //
 // Library Dependencies:
 // - Wire
