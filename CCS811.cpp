@@ -52,8 +52,7 @@
 // Returns:
 // bool - true if successful; false otherwise
 //*****************************************************************************
-bool CCS811::begin(uint8_t addr)
-{
+bool CCS811::begin(uint8_t addr) {
     // Set the I2C Address used by this library
     _i2c_addr = addr;
 
