@@ -124,21 +124,21 @@ void setup() {
 // Main Processing Loop.
 //*****************************************************************************
 void loop() {
-  // If the sensor has not yet been enabled and the startup delay time has
-  // not transpired return.  This implements the startup delay.
-  if ((!ccs811Enabled) && (millis() < ccs811StartupTime)) {
-    return;
-  }
+    // If the sensor has not yet been enabled and the startup delay time has
+    // not transpired return.  This implements the startup delay.
+    if ((!ccs811Enabled) && (millis() < ccs811StartupTime)) {
+        return;
+    }
 
-  // Startup time has transpired, set the enable so the delay code is
-  // no longer used
-  ccs811Enabled = 1;
+    // Startup time has transpired, set the enable so the delay code is
+    // no longer used
+    ccs811Enabled = 1;
 
-  // Sample CCS811 Data
-  sampleCCS811();
+    // Sample CCS811 Data
+    sampleCCS811();
 
-  // Wait for next sample
-  delay(CCS811SAMPLEDELAY);
+    // Wait for next sample
+    delay(CCS811SAMPLEDELAY);
 }
 
 
@@ -147,55 +147,55 @@ void loop() {
 // Sample and update CCS811 data from sensor.
 //*****************************************************************************
 void sampleCCS811() {
-  uint16_t    ccs_eco2;   // CCS811 eCO2
-  uint16_t    ccs_tvoc;   // CCS811 TVOC
-  uint8_t     ccs_error;  // CCS811 error register
+    uint16_t ccs_eco2;      // CCS811 eCO2
+    uint16_t ccs_tvoc;      // CCS811 TVOC
+    uint8_t  ccs_error;     // CCS811 error register
 
-  Serial.println(F("Reading CCS811 Sensor"));
+    Serial.println(F("Reading CCS811 Sensor"));
 
-  // Read the sensor data, this updates multiple fields
-  // in the CCS811 library
-  ccs.readAlgResultDataRegister();
+    // Read the sensor data, this updates multiple fields
+    // in the CCS811 library
+    ccs.readAlgResultDataRegister();
 
-  // Read error register if an error was reported
-  if (ccs.hasERROR()) {
-    Serial.println(F("ERROR: CCS811 Error Flag Set"));
+    // Read error register if an error was reported
+    if (ccs.hasERROR()) {
+        Serial.println(F("ERROR: CCS811 Error Flag Set"));
 
-    ccs_error = ccs.getERROR_ID();
-    Serial.print(F("CCS811 Error Register = "));
-    Serial.println(ccs_error);
+        ccs_error = ccs.getERROR_ID();
+        Serial.print(F("CCS811 Error Register = "));
+        Serial.println(ccs_error);
+        Serial.println();
+        return;
+    }
+
+    // Data is ready
+    if (ccs.isDATA_READY()) {
+        ccs_eco2 = ccs.geteCO2();
+        ccs_tvoc = ccs.getTVOC();
+
+        // Verify eCO2 is valid
+        if (ccs_eco2 > CCS811_ECO2_MAX) {
+            Serial.println(F("ERROR: CCS811 eCO2 Exceeded Limit"));
+        }
+
+        // Print eCO2 to serial monitor
+        Serial.print(F("eCO2 = "));
+        Serial.print(ccs_eco2);
+        Serial.println(F(" ppm"));
+
+        // Verify TVOC is valid
+        if (ccs_tvoc > CCS811_TVOC_MAX) {
+            Serial.println(F("ERROR: CCS811 TVOC Exceeded Limit"));
+        }
+
+        // Print TVOC to serial monitor
+        Serial.print(F("TVOC = "));
+        Serial.print(ccs_tvoc);
+        Serial.println(F(" ppb"));
+    }
+    else {
+        Serial.println(F("ERROR: CCS811 Data Not Ready"));
+    }
+
     Serial.println();
-    return;
-  }
-
-  // Data is ready
-  if (ccs.isDATA_READY()) {
-    ccs_eco2 = ccs.geteCO2();
-    ccs_tvoc = ccs.getTVOC();
-
-    // Verify eCO2 is valid
-    if (ccs_eco2 > CCS811_ECO2_MAX) {
-      Serial.println(F("ERROR: CCS811 eCO2 Exceeded Limit"));
-    }
-
-    // Print eCO2 to serial monitor
-    Serial.print(F("eCO2 = "));
-    Serial.print(ccs_eco2);
-    Serial.println(F(" ppm"));
-
-    // Verify TVOC is valid
-    if (ccs_tvoc > CCS811_TVOC_MAX) {
-      Serial.println(F("ERROR: CCS811 TVOC Exceeded Limit"));
-    }
-
-    // Print TVOC to serial monitor
-    Serial.print(F("TVOC = "));
-    Serial.print(ccs_tvoc);
-    Serial.println(F(" ppb"));
-  }
-  else {
-    Serial.println(F("ERROR: CCS811 Data Not Ready"));
-  }
-
-  Serial.println();
 }
