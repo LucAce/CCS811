@@ -18,6 +18,7 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
+//*****************************************************************************
 //
 // CCS811 Library Sensor Example
 //
@@ -42,6 +43,7 @@
 //   reading the sensor values must exceed that value plus some margin of
 //   error.  If the delay is not sufficient the sensor may continuously
 //   report data as not available.
+//
 //*****************************************************************************
 
 #include <Wire.h>
@@ -66,56 +68,56 @@ volatile unsigned long ccs811StartupTime;
 // Environment setup.
 //*****************************************************************************
 void setup() {
-    // Set Serial BAUD Rate
-    Serial.begin(115200);
-    delay(100);
+   // Set Serial BAUD Rate
+   Serial.begin(115200);
+   delay(100);
 
-    // Wait for serial monitor to open
-    while(!Serial);
+   // Wait for serial monitor to open
+   while(!Serial);
 
-    Serial.println(F("\nCCS811 Library Example\n"));
+   Serial.println(F("\nCCS811 Library Example\n"));
 
-    // Configure the CCS sensor to use I2C interface
-    if (!ccs.begin()) {
-        Serial.println(F("ERROR: Could not find a valid CCS811 sensor"));
-        Serial.println(F("WARN:  Forcing Watch Dog Timeout (WDT)"));
-        while(1);
-    }
+   // Configure the CCS sensor to use I2C interface
+   if (!ccs.begin()) {
+       Serial.println(F("ERROR: Could not find a valid CCS811 sensor"));
+       Serial.println(F("WARN:  Forcing Watch Dog Timeout (WDT)"));
+       while(1);
+   }
 
-    // Let sensor boot up
-    delay(1000);
+   // Let sensor boot up
+   delay(1000);
 
-    // Extend I2C clock stretch timeout (See Notes)
-    Wire.setClockStretchLimit(500);
+   // Extend I2C clock stretch timeout (See Notes)
+   Wire.setClockStretchLimit(500);
 
-    // Calibrate CS811 sensor
-    do {
-        delay(CCS811SAMPLEDELAY);
-        ccs.readStatusRegister();
-    }
-    while (!ccs.isDATA_READY());
-    float temp = ccs.calculateTemperature();
-    ccs.setTempOffset(temp - 25.0);
+   // Calibrate CS811 sensor
+   do {
+       delay(CCS811SAMPLEDELAY);
+       ccs.readStatusRegister();
+   }
+   while (!ccs.isDATA_READY());
+   float temp = ccs.calculateTemperature();
+   ccs.setTempOffset(temp - 25.0);
 
-    // Set the sensore startup delay time
-    ccs811StartupTime = millis() + CCS811STARTUPDELAY;
+   // Set the sensor startup delay time
+   ccs811StartupTime = millis() + CCS811STARTUPDELAY;
 
-    // Print CCS811 sensor information
-    Serial.println(F("CCS811 Sensor Enabled:"));
-    Serial.print(F("Hardware ID:           0x"));
-    Serial.println(ccs.getHWID(), HEX);
-    Serial.print(F("Hardware Version:      0x"));
-    Serial.println(ccs.getHWVersion(), HEX);
-    Serial.print(F("Firmware Boot Version: 0x"));
-    Serial.println(ccs.getFWBootVersion(), HEX);
-    Serial.print(F("Firmware App Version:  0x"));
-    Serial.println(ccs.getFWAppVersion(), HEX);
-    Serial.println();
+   // Print CCS811 sensor information
+   Serial.println(F("CCS811 Sensor Enabled:"));
+   Serial.print(F("Hardware ID:           0x"));
+   Serial.println(ccs.getHWID(), HEX);
+   Serial.print(F("Hardware Version:      0x"));
+   Serial.println(ccs.getHWVersion(), HEX);
+   Serial.print(F("Firmware Boot Version: 0x"));
+   Serial.println(ccs.getFWBootVersion(), HEX);
+   Serial.print(F("Firmware App Version:  0x"));
+   Serial.println(ccs.getFWAppVersion(), HEX);
+   Serial.println();
 
-    // Print startup delay message
-    Serial.print(F("CCS811 Startup In "));
-    Serial.print(CCS811STARTUPDELAY/1000);
-    Serial.println(F(" sec\n"));
+   // Print startup delay message
+   Serial.print(F("CCS811 Startup In "));
+   Serial.print(CCS811STARTUPDELAY/1000);
+   Serial.println(F(" sec\n"));
 }
 
 
@@ -147,9 +149,9 @@ void loop() {
 // Sample and update CCS811 data from sensor.
 //*****************************************************************************
 void sampleCCS811() {
-    uint16_t ccs_eco2;      // CCS811 eCO2
-    uint16_t ccs_tvoc;      // CCS811 TVOC
-    uint8_t  ccs_error;     // CCS811 error register
+    uint16_t    ccs_eco2;   // CCS811 eCO2
+    uint16_t    ccs_tvoc;   // CCS811 TVOC
+    uint8_t     ccs_error;  // CCS811 error register
 
     Serial.println(F("Reading CCS811 Sensor"));
 
