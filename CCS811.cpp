@@ -1,5 +1,5 @@
 //*****************************************************************************
-// Copyright (c) 2017 LucAce
+// Copyright (c) 2017-2018 LucAce
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
 // copy of this software and associated documentation files (the "Software"),
@@ -46,7 +46,7 @@
 
 //*****************************************************************************
 // Function: begin
-// Initalize the CCS811 Sensor.
+// Initialize the CCS811 Sensor.
 //
 // Parameters:
 // addr - I2C address of the sensor
@@ -103,7 +103,7 @@ bool CCS811::begin(uint8_t addr) {
 
 //*****************************************************************************
 // Function: reset
-// Re-initalize the CCS811 Sensor using the same I2C address already
+// Re-initialize the CCS811 Sensor using the same I2C address already
 // configured.
 //
 // Returns:
