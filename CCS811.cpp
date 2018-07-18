@@ -26,15 +26,15 @@
 // - Wire
 //
 // Notes:
-// - ESP8266 Arduino Library v2.3.0 uses a default I2C timout value that is
+// - ESP8266 Arduino Library v2.3.0 uses a default I2C timeout value that is
 //   too short for the CCS811.  A timeout value of 500us is sufficient in most
 //   use cases.  Increase the timeout value by calling:
 //     Wire.setClockStretchLimit(500);
 // - ESP8266 Arduino Library v2.3.0 Wire library resets the I2C timeout every
 //   time a call to .begin is made.  setClockStretchLimit(TIMEOUT) must be
 //   called following every subsequent call to .begin as a workaround.  Later
-//   versions of the EPS8266 for Arduino libraries are expected to correct
-//   this. See:
+//   versions of the ESP8266 for Arduino libraries are expected to correct
+//   this.  See:
 //     https://github.com/esp8266/Arduino/issues/2162
 // - Source code uses Natural Docs for Document Generation.
 //

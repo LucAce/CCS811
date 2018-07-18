@@ -290,7 +290,7 @@ class CCS811 {
             // 1: The Heater current in the CCS811 is not in range
             uint8_t HEATER_FAULT: 1;
 
-            // Bit 5: Hearter Voltage Error
+            // Bit 5: Heater Voltage Error
             // 0: No error
             // 1: The Heater voltage is not being applied correctly
             uint8_t HEATER_SUPPLY: 1;
