@@ -601,6 +601,9 @@ void CCS811::startApplication() {
 //*****************************************************************************
 void CCS811::_i2c_init() {
     Wire.begin();
+    #ifdef ESP8266
+    Wire.setClockStretchLimit(500);
+    #endif
 }
 
 
