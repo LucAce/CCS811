@@ -279,7 +279,7 @@ void CCS811::readBaselineRegister() {
     uint8_t buf[2];
 
     this->read(CCS811_BASELINE, buf, 2);
-    _baseline = ((uint16_t)buf[0] << 8) | ((uint16_t)buf[1]);
+    _BASELINE = ((uint16_t)buf[0] << 8) | ((uint16_t)buf[1]);
 }
 
 
@@ -299,7 +299,7 @@ void CCS811::writeBaselineRegister(uint16_t baseline) {
         (uint8_t)((baseline >> 0) & 0xFF)
     };
 
-    _baseline = baseline;
+    _BASELINE = baseline;
     this->write(CCS811_BASELINE, buf, 2);
 }
 

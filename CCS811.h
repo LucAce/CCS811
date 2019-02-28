@@ -134,6 +134,7 @@ class CCS811 {
         uint8_t  isDATA_READY()     { return _status.DATA_READY; }
         uint16_t geteCO2()          { return _eCO2;              }
         uint16_t getTVOC()          { return _TVOC;              }
+        uint16_t getBASELINE()      { return _BASELINE;          }
 
         uint8_t  hasERROR()         { return _status.ERROR;      }
         uint8_t  getERROR_ID()      { return _error_id.get();    }
@@ -149,10 +150,10 @@ class CCS811 {
         float    _temp_offset;
         uint16_t _eCO2;
         uint16_t _TVOC;
+        uint16_t _BASELINE;
         uint16_t _raw_data;
         uint32_t _vref;
         uint32_t _vntc;
-        uint16_t _baseline;
 
         uint8_t  _HW_ID;
         uint8_t  _HW_Version;
